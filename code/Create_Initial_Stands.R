@@ -13,12 +13,22 @@ initial_stand <- function (species, Dg, Martonne) {
 }
 
 initial_stand("PISY", 25, 29)
+initial_stand("PISY", 25, 61)
 initial_stand("PISY", 25, 93)
+
 initial_stand("PIPI", 25, 16)
+initial_stand("PIPI", 25, 27.5)
 initial_stand("PIPI", 25, 39)
+
 initial_stand("PIHA", 25, 10)
+initial_stand("PIHA", 25, 23.5)
 initial_stand("PIHA", 25, 37)
+
 initial_stand("PINI", 25, 21)
+initial_stand("PINI", 25, 48)
 initial_stand("PINI", 25, 75)
+
 initial_stand("PIPN", 25, 18)
+initial_stand("PIPN", 25, 50)
 initial_stand("PIPN", 25, 82)
+
