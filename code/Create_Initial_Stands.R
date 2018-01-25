@@ -1,34 +1,34 @@
 library(tidyverse)
+library(truncnorm)
 
 
-load("./data/condes_pars.Rdata")
+condes_pars <- read_tsv("./data/condes_parameters.txt")
 
-initial_stand <- function (species, Dg, Martonne) {
-     pars <- condes_pars%>%
-            filter(Code==species)  %>% 
-             mutate(N = exp((C0 + C1 * log(Martonne) + 
-                                   (E0 + E1* Martonne)*log(Dg))))
-      return(pars$N)
+## 
+stands <- condes_pars %>%
+       mutate(N = as.integer(exp((C0 + C1 * log(Martonne) + 
+                                  (E0 + E1* Martonne)*log(Dg))))) %>%
+      group_by(Species, Code, Climate, Martonne,ID) %>%
+      summarise (N=N,
+                 dbhs = list(rtruncnorm(N, a= 2.5, b =25, Dg,0.17*Dg)))
       
+
+getdiamdist <- function (x) {
+      distr <- data.frame(CD=cut(x, breaks = c(0, 7.5, 12.5, 17.5, 22.5, 27.5, 32.5,
+                                               37.5, 42.5, 47.5, 70),
+                                 labels = c( "5", "10", "15","20", "25","30",
+                                             "35", "40","45","50")))  %>%
+            group_by(CD)  %>%
+            summarise(n=n()) %>%
+            complete(CD)  %>%
+            #filter(!CD =="5" ) %>%
+            replace_na(list(n= 0)) %>%
+            spread(CD,n)
 }
 
-initial_stand("PISY", 25, 29)
-initial_stand("PISY", 25, 61)
-initial_stand("PISY", 25, 93)
+stands$dd <- map(stands$dbhs,getdiamdist)
 
-initial_stand("PIPI", 25, 16)
-initial_stand("PIPI", 25, 27.5)
-initial_stand("PIPI", 25, 39)
 
-initial_stand("PIHA", 25, 10)
-initial_stand("PIHA", 25, 23.5)
-initial_stand("PIHA", 25, 37)
 
-initial_stand("PINI", 25, 21)
-initial_stand("PINI", 25, 48)
-initial_stand("PINI", 25, 75)
 
-initial_stand("PIPN", 25, 18)
-initial_stand("PIPN", 25, 50)
-initial_stand("PIPN", 25, 82)
 
