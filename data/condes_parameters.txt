@@ -1,6 +1,16 @@
-Species	Code	C0	C1	E0	E1
-Pinus sylvestris	PISY	12.619	0	-1.795	0.0012
-Pinus pinea	PIPI	13.426	0	-2.2647	0.0051
-Pinus halepensis	PIHA	7.982	1.506	-1.7009	-0.0109
-Pinus nigra	PINI	11.819	0.29	-1.8759	0
-Pinus pinaster	PIPN	9.784	0.937	-1.7298	-0.005
+Species	Code	Climate	Martonne	ID	C0	C1	E0	E1
+Pinus sylvestris	PISY	Xeric	29	PISY_Xeric	12.619	0	-1.795	0.0012
+Pinus sylvestris	PISY	Mesic	61	PISY_Mesic	12.619	0	-1.795	0.0012
+Pinus sylvestris	PISY	Humid	93	PISY_Humid	12.619	0	-1.795	0.0012
+Pinus pinea	PIPI	Xeric	16	PIPI_Xeric	13.426	0	-2.2647	0.0051
+Pinus pinea	PIPI	Mesic	27.5	PIPI_Mesic	13.426	0	-2.2647	0.0051
+Pinus pinea	PIPI	Humid	39	PIPI_Humid	13.426	0	-2.2647	0.0051
+Pinus halepensis	PIHA	Xeric	10	PIHA_Xeric	7.982	1.506	-1.7009	-0.0109
+Pinus halepensis	PIHA	Mesic	23.5	PIHA_Mesic	7.982	1.506	-1.7009	-0.0109
+Pinus halepensis	PIHA	Humid	37	PIHA_Humid	7.982	1.506	-1.7009	-0.0109
+Pinus nigra	PINI	Xeric	21	PINI_Xeric	11.819	0.29	-1.8759	0
+Pinus nigra	PINI	Mesic	48	PINI_Mesic	11.819	0.29	-1.8759	0
+Pinus nigra	PINI	Humid	75	PINI_Humid	11.819	0.29	-1.8759	0
+Pinus pinaster	PIPN	Xeric	18	PIPN_Xeric	9.784	0.937	-1.7298	-0.005
+Pinus pinaster	PIPN	Mesic	50	PIPN_Mesic	9.784	0.937	-1.7298	-0.005
+Pinus pinaster	PIPN	Humid	82	PIPN_Humid	9.784	0.937	-1.7298	-0.005
