@@ -177,62 +177,62 @@ climate_scenarios <- function(df) {
   ### Temperature #####
 
   temp_jan <- list()
-  for (year in 1:100) {
+  for (year in 1:95) {
     temp_jan[[year]]<- paste0(" <sc_cimtjanVal ts=\"",year,"\">",
                               df$temp[year,1],"</sc_cimtjanVal>") }
 
   temp_feb <- list()
-  for (year in 1:100) {
+  for (year in 1:95) {
     temp_feb[[year]]<- paste0(" <sc_cimtfebVal ts=\"",year,"\">",
                               df$temp[year,2],"</sc_cimtfebVal>") }
 
   temp_mar <- list()
-  for (year in 1:100) {
+  for (year in 1:95) {
     temp_mar[[year]]<- paste0(" <sc_cimtmarVal ts=\"",year,"\">",
                               df$temp[year,3],"</sc_cimtmarVal>") }
 
   temp_apr <- list()
-  for (year in 1:100) {
+  for (year in 1:95) {
     temp_apr[[year]]<- paste0(" <sc_cimtaprVal ts=\"",year,"\">",
                               df$temp[year,4],"</sc_cimtaprVal>") }
 
   temp_may <- list()
-  for (year in 1:100) {
+  for (year in 1:95) {
     temp_may[[year]]<- paste0(" <sc_cimtmayVal ts=\"",year,"\">",
                               df$temp[year,5],"</sc_cimtmayVal>") }
 
   temp_jun <- list()
-  for (year in 1:100) {
+  for (year in 1:95) {
     temp_jun[[year]]<- paste0(" <sc_cimtjunVal ts=\"",year,"\">",
                               df$temp[year,6],"</sc_cimtjunVal>") }
 
   temp_jul <- list()
-  for (year in 1:100) {
+  for (year in 1:95) {
     temp_jul[[year]]<- paste0(" <sc_cimtjulVal ts=\"",year,"\">",
                               df$temp[year,7],"</sc_cimtjulVal>") }
 
   temp_aug <- list()
-  for (year in 1:100) {
+  for (year in 1:95) {
     temp_aug[[year]]<- paste0(" <sc_cimtaugVal ts=\"",year,"\">",
                               df$temp[year,8],"</sc_cimtaugVal>") }
 
   temp_sep <- list()
-  for (year in 1:100) {
+  for (year in 1:95) {
     temp_sep[[year]]<- paste0(" <sc_cimtsepVal ts=\"",year,"\">",
                               df$temp[year,9],"</sc_cimtsepVal>") }
 
   temp_oct <- list()
-  for (year in 1:100) {
+  for (year in 1:95) {
     temp_oct[[year]]<- paste0(" <sc_cimtoctVal ts=\"",year,"\">",
                               df$temp[year,10],"</sc_cimtoctVal>") }
 
   temp_nov <- list()
-  for (year in 1:100) {
+  for (year in 1:95) {
     temp_nov[[year]]<- paste0(" <sc_cimtnovVal ts=\"",year,"\">",
                               df$temp[year,11],"</sc_cimtnovVal>") }
 
   temp_dec <- list()
-  for (year in 1:100) {
+  for (year in 1:95) {
     temp_dec[[year]]<- paste0(" <sc_cimtdecVal ts=\"",year,"\">",
                               df$temp[year,12], "</sc_cimtdecVal>")
   }
@@ -253,62 +253,62 @@ climate_scenarios <- function(df) {
   ## Precipitation #####
 
   prec_jan <- list()
-  for (year in 1:100) {
+  for (year in 1:95) {
     prec_jan[[year]]<- paste0(" <sc_cimpjanVal ts=\"",year,"\">",
                               df$prec[year,1],"</sc_cimpjanVal>") }
 
   prec_feb <- list()
-  for (year in 1:100) {
+  for (year in 1:95) {
     prec_feb[[year]]<- paste0(" <sc_cimpfebVal ts=\"",year,"\">",
                               df$prec[year,2],"</sc_cimpfebVal>") }
 
   prec_mar <- list()
-  for (year in 1:100) {
+  for (year in 1:95) {
     prec_mar[[year]]<- paste0(" <sc_cimpmarVal ts=\"",year,"\">",
                               df$prec[year,3],"</sc_cimpmarVal>") }
 
   prec_apr <- list()
-  for (year in 1:100) {
+  for (year in 1:95) {
     prec_apr[[year]]<- paste0(" <sc_cimpaprVal ts=\"",year,"\">",
                               df$prec[year,4],"</sc_cimpaprVal>") }
 
   prec_may <- list()
-  for (year in 1:100) {
+  for (year in 1:95) {
     prec_may[[year]]<- paste0(" <sc_cimpmayVal ts=\"",year,"\">",
                               df$prec[year,5],"</sc_cimpmayVal>") }
 
   prec_jun <- list()
-  for (year in 1:100) {
+  for (year in 1:95) {
     prec_jun[[year]]<- paste0(" <sc_cimpjunVal ts=\"",year,"\">",
                               df$prec[year,6],"</sc_cimpjunVal>") }
 
   prec_jul <- list()
-  for (year in 1:100) {
+  for (year in 1:95) {
     prec_jul[[year]]<- paste0(" <sc_cimpjulVal ts=\"",year,"\">",
                               df$prec[year,7],"</sc_cimpjulVal>") }
 
   prec_aug <- list()
-  for (year in 1:100) {
+  for (year in 1:95) {
     prec_aug[[year]]<- paste0(" <sc_cimpaugVal ts=\"",year,"\">",
                               df$prec[year,8],"</sc_cimpaugVal>") }
 
   prec_sep <- list()
-  for (year in 1:100) {
+  for (year in 1:95) {
     prec_sep[[year]]<- paste0(" <sc_cimpsepVal ts=\"",year,"\">",
                               df$prec[year,9],"</sc_cimpsepVal>") }
 
   prec_oct <- list()
-  for (year in 1:100) {
+  for (year in 1:95) {
     prec_oct[[year]]<- paste0(" <sc_cimpoctVal ts=\"",year,"\">",
                               df$prec[year,10],"</sc_cimpoctVal>") }
 
   prec_nov <- list()
-  for (year in 1:100) {
+  for (year in 1:95) {
     prec_nov[[year]]<- paste0(" <sc_cimpnovVal ts=\"",year,"\">",
                               df$prec[year,11],"</sc_cimpnovVal>") }
 
   prec_dec <- list()
-  for (year in 1:100) {
+  for (year in 1:95) {
     prec_dec[[year]]<- paste0(" <sc_cimpdecVal ts=\"",year,"\">",
                               df$prec[year,12], "</sc_cimpdecVal>")
   }
@@ -351,7 +351,9 @@ narrative_PIPR <- mapply(list,
                     names = apply(expand.grid(PIPR_names,substr(names(thinning_regimes),10,14)),
                                   1, paste, collapse="_"),
                     harvest = rep(thinning_regimes, length(PIPR_names)),
+                    climate = rep (PIPR_CCLM_8.5, nharvest),
                     SIMPLIFY = FALSE)
+names(narrative_PIPR) <- map(narrative_PIPR, "names")
 
 narrative_PIPA <- mapply(list, 
                          densities = rep(PIPA_densities, nharvest),
@@ -359,7 +361,9 @@ narrative_PIPA <- mapply(list,
                          names = apply(expand.grid(PIPA_names,substr(names(thinning_regimes),10,14)),
                                        1, paste, collapse="_"),
                          harvest = rep(thinning_regimes, length(PIPA_names)),
+                         climate = rep (PIPA_CCLM_8.5, nharvest),
                          SIMPLIFY = FALSE)
+names(narrative_PIPA) <- map(narrative_PIPA, "names")
 
 narrative_PIHA <- mapply(list, 
                          densities = rep(PIHA_densities, nharvest),
@@ -367,7 +371,9 @@ narrative_PIHA <- mapply(list,
                          names = apply(expand.grid(PIHA_names,substr(names(thinning_regimes),10,14)),
                                        1, paste, collapse="_"),
                          harvest = rep(thinning_regimes, length(PIHA_names)),
+                         climate = rep (PIHA_CCLM_8.5, nharvest),
                          SIMPLIFY = FALSE)
+names(narrative_PIHA) <- map(narrative_PIHA, "names")
 
 narrative_PINI <- mapply(list, 
                          densities = rep(PINI_densities, nharvest),
@@ -375,7 +381,9 @@ narrative_PINI <- mapply(list,
                          names = apply(expand.grid(PINI_names,substr(names(thinning_regimes),10,14)),
                                        1, paste, collapse="_"),
                          harvest = rep(thinning_regimes, length(PINI_names)),
+                         climate = rep (PINI_CCLM_8.5, nharvest),
                          SIMPLIFY = FALSE)
+names(narrative_PINI) <- map(narrative_PINI, "names")
 
 narrative_PISY <- mapply(list, 
                          densities = rep(PISY_densities, nharvest),
@@ -383,7 +391,9 @@ narrative_PISY <- mapply(list,
                          names = apply(expand.grid(PISY_names,substr(names(thinning_regimes),10,14)),
                                        1, paste, collapse="_"),
                          harvest = rep(thinning_regimes, length(PISY_names)),
+                         climate = rep (PISY_CCLM_8.5, nharvest),
                          SIMPLIFY = FALSE)
+names(narrative_PISY) <- map(narrative_PISY, "names")
 
 narrative_PIUN <- mapply(list, 
                          densities = rep(PIUN_densities, nharvest),
@@ -391,20 +401,20 @@ narrative_PIUN <- mapply(list,
                          names = apply(expand.grid(PIUN_names,substr(names(thinning_regimes),10,14)),
                                        1, paste, collapse="_"),
                          harvest = rep(thinning_regimes, length(PIUN_names)),
+                         climate = rep (PIUN_CCLM_8.5, nharvest),
                          SIMPLIFY = FALSE)
-  
+names(narrative_PIUN) <- map(narrative_PIUN, "names")
 
-parse_xml <- function (narrative, climate) {
-  ### DEFINIR LOS NOMBRES EN BASE A NOMBRE DE OBJETO!
-  
-  climate_name <- deparse(substitute(climate))
-  narrative_name <- deparse(susbtitute(narrative))
+
+parse_xml <- function (narrative, narrative_name, climate_name) {
+
   densities <- narrative$densities
-  plot_ID <- paste0(names,"_",
+  plot_ID <- paste0(narrative$names,"_",
                     climate_name,
                    "_",
                    narrative_name)
   latitude <- narrative$latitude
+  climate <- narrative$climate
   harvest <- narrative$harvest
 
 y <- read_xml("./data/SORTIE_piloto.xml")
@@ -441,12 +451,12 @@ y <- read_xml("./data/SORTIE_piloto.xml")
   
   ## Replace each node in the xml file by the object created previously
     xml_text(sortie_plot_title) <- plot_ID
-    xml_text(sortie_plot_latitude) <- latitude
+    xml_text(sortie_plot_latitude) <- as.character(latitude)
     
     sortie_initialDensities <- xml_replace(sortie_initialDensities, densities)
-    sortie_harvest <- xml_replace(sortie_harvest,thinning)
+    sortie_harvest <- xml_replace(sortie_harvest,harvest)
     #sortie_planting <- xml_replace(sortie_planting,planting)
-    #sortie_climate <- xml_replace(sortie_climate,climate )
+    sortie_climate <- xml_replace(sortie_climate,climate )
     
     xml_text(sortie_output_name) <- paste0("D:\\Activity\\Thinning_CC\\Thinning_Cat\\data\\SORTIE_Outputs\\THINNING_",
                                            plot_ID)
@@ -454,6 +464,8 @@ y <- read_xml("./data/SORTIE_piloto.xml")
     xml_text(sortie_short_output_name) <- paste0("D:\\Activity\\Thinning_CC\\Thinning_Cat\\data\\SORTIE_Outputs\\THINNING_",
                                                  plot_ID)
     y
+    
+
 
 }
 
@@ -461,8 +473,7 @@ y <- read_xml("./data/SORTIE_piloto.xml")
 # Generate the xml files --------------------------------------------------
 
 ## Climate CCLM_85
- xml_files <- pmap(list(narrative_PIPR, CCLM_8.5), parse_xml)
-
+ xml_files <- pmap(list(narrative_PIPR,"PIPR",  "CCLM_8.5"), parse_xml)
   map(seq_along(xml_files), function(i){
     write_xml(xml_files[[i]],
               file=paste0("D:/Activity/Thinning_CC/Thinning_Cat/data/SORTIE_Inputs/", names(xml_files)[[i]],"_CCLM_85.xml")) })
