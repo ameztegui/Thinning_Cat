@@ -3,32 +3,84 @@
 rm(list=ls())
 
 library(xml2)
+library(tidyverse)
 
 ## We first create the initial diameter distributions, and then the climate, plot name, management alternatives...
 
 ## Let's load the data
 source("./code/01_Generate_Structure.R")
 
-ifn_plots <- ifn_plots[1:20,]
 
 
-## We can now prepare the lists we need to run next script: one for dd, another for species names,
-# for Code, for Latitude...
-stands_dd <-ifn_plots$dd
-stands_names <- as.list(ifn_plots$Codi)
-stands_species <- as.list(ifn_plots$Species)
-stands_latitude <- as.list(as.character(ifn_plots$Latitude))
-stands_prec <- as.list(ifn_plots$MAP)
-stands_temp <- as.list(ifn_plots$MAT)
+# Extract the desired plots -----------------------------------------------
+
+# Our dataset includes all plots in IFN3 in Catalonia, but we would better filter only thoswe that we want
+# Based on species, and some deciles of Martonne index
+
+define_dataset <- function(df, species, quantiles) {
+  species <- enquo(species)
+  df_sp <- filter(df, Species == !!species)
+  
+  q <- numeric(length = length(quantiles))
+  for (i in seq_along(quantiles)) {
+    q[i] <- quantile(df_sp$Martonne, quantiles[i])
+  }
+  
+  df_sp <- df_sp %>%
+    slice(c(which.min(abs(Martonne-q[1])),
+            which.min(abs(Martonne-q[2])),
+            which.min(abs(Martonne-q[3]))))
+  
+}
+
+## We extract the plots
+
+PIPR_plots <-define_dataset(ifn_plots, "PIPR", c(0.10, 0.5, 0.9))
+PIPA_plots <-define_dataset(ifn_plots, "PIPA", c(0.10, 0.5, 0.9))
+PIHA_plots <-define_dataset(ifn_plots, "PIHA", c(0.10, 0.5, 0.9))
+PINI_plots <-define_dataset(ifn_plots, "PINI", c(0.10, 0.5, 0.9))
+PISY_plots <-define_dataset(ifn_plots, "PISY", c(0.10, 0.5, 0.9))
+PIUN_plots <-define_dataset(ifn_plots, "PIUN", c(0.10, 0.5, 0.9))
+  
+# This function takes the list of inventory plots, filters by the defined species of interest
+# and extracts the columns specified as field
+extract_field <- function (df, species, field) {
+  species <- enquo(species)
+  field <- enquo(field)
+  
+  df_sp <- filter(df, Species == !!species)
+  var_sp <- df_sp %>% pull(!!field)
+  var_sp <- as.list(var_sp)
+  names(var_sp) <- df_sp$Codi
+  var_sp
+}
+
+# Plot Names-------------------------------------------------------
+
+# First,we need to extract the plot names  of all plots for each species
+PIPR_names <- extract_field(PIPR_plots, "PIPR", Codi)
+PIPA_names <- extract_field(PIPA_plots, "PIPA", Codi)
+PIHA_names <- extract_field(PIHA_plots, "PIHA", Codi)
+PINI_names <- extract_field(PINI_plots, "PINI", Codi)
+PISY_names <- extract_field(PISY_plots, "PISY", Codi)
+PIUN_names <- extract_field(PIUN_plots, "PIUN", Codi)
 
 # Initial densities -------------------------------------------------------
+
+# First,we need to extract the diameter distributions of all plots for each species
+PIPR_dd <- extract_field(PIPR_plots, "PIPR", dd)
+PIPA_dd <- extract_field(PIPA_plots, "PIPA", dd)
+PIHA_dd <- extract_field(PIHA_plots, "PIHA", dd)
+PINI_dd <- extract_field(PINI_plots, "PINI", dd)
+PISY_dd <- extract_field(PISY_plots, "PISY", dd)
+PIUN_dd <- extract_field(PIUN_plots, "PIUN", dd)
 
 # This function takes the diameter distribution of each plot and parses it into a text string, 
 # so that it can be inserted into the xml file
 # The arguments are a dataframe, and the name of the species. Here we take each from a different list
 
 define_densities <- function (df, species)  {
-      complete_xml <- as.character()
+  complete_xml <- as.character()
       
       opening <- 'tr_initialDensities>'
       closing <- "</tr_initialDensities>"
@@ -63,10 +115,27 @@ define_densities <- function (df, species)  {
             complete_xml <- complete_xml[1]
       }
       complete_xml <- paste0(opening,complete_xml, closing)
+      
+      complete_xml
       }
 
 ## We now create a list with the xml text
-stands_densities <- pmap(list(stands_dd, stands_species),define_densities)
+PIPR_densities <- map(PIPR_dd, define_densities, "PIPR")
+PIPA_densities <- map(PIPA_dd, define_densities, "PIPA")
+PIHA_densities <- map(PIHA_dd, define_densities, "PIHA")
+PINI_densities <- map(PINI_dd, define_densities, "PINI")
+PISY_densities <- map(PISY_dd, define_densities, "PISY")
+PIUN_densities <- map(PIUN_dd, define_densities, "PIUN")
+
+
+# Latitudes ---------------------------------------------------------------
+
+PIPR_lat <- extract_field(PIPR_plots, "PIPR", Latitude)
+PIPA_lat <- extract_field(PIPA_plots, "PIPA", Latitude)
+PIHA_lat <- extract_field(PIHA_plots, "PIHA", Latitude)
+PINI_lat <- extract_field(PINI_plots, "PINI", Latitude)
+PISY_lat <- extract_field(PISY_plots, "PISY", Latitude)
+PIUN_lat <- extract_field(PIUN_plots, "PIUN", Latitude)
 
 
 # Thinning Regimes ---------------------------------------------------------
@@ -81,7 +150,12 @@ names(thinning_regimes) <- substr(names(thinning_regimes),1,14)
 
 load("./data/climate/climatic_data.Rdata")
 
-CCLM_8.5 <- CCLM_8.5[1:20]
+PIPR_CCLM_8.5 <- CCLM_8.5[names(CCLM_8.5) %in% PIPR_plots$Codi]
+PIPA_CCLM_8.5 <- CCLM_8.5[names(CCLM_8.5) %in% PIPA_plots$Codi]
+PIHA_CCLM_8.5 <- CCLM_8.5[names(CCLM_8.5) %in% PIHA_plots$Codi]
+PINI_CCLM_8.5 <- CCLM_8.5[names(CCLM_8.5) %in% PINI_plots$Codi]
+PISY_CCLM_8.5 <- CCLM_8.5[names(CCLM_8.5) %in% PISY_plots$Codi]
+PIUN_CCLM_8.5 <- CCLM_8.5[names(CCLM_8.5) %in% PIUN_plots$Codi]
 
 climate_scenarios <- function(df) {
 
@@ -259,43 +333,81 @@ climate_scenarios <- function(df) {
 
 }
 
-# CCLM_4.5 <- map(CCLM_4.5, climate_scenarios)
-CCLM_8.5 <- map(CCLM_8.5, climate_scenarios)
-# RCA4_4.5 <- map(RCA4_4.5, climate_scenarios)
-# RCA4_8.5 <- map(RCA4_8.5, climate_scenarios)
+PIPR_CCLM_8.5 <- map(PIPR_CCLM_8.5, climate_scenarios)
+PIPA_CCLM_8.5 <- map(PIPA_CCLM_8.5, climate_scenarios)
+PIHA_CCLM_8.5 <- map(PIHA_CCLM_8.5, climate_scenarios)
+PINI_CCLM_8.5 <- map(PINI_CCLM_8.5, climate_scenarios)
+PISY_CCLM_8.5 <- map(PISY_CCLM_8.5, climate_scenarios)
+PIUN_CCLM_8.5 <- map(PIUN_CCLM_8.5, climate_scenarios)
 
-
-# Repeat files to combine initial densities and thinning regimes ----------------------------------
-nplots <- length(stands_names)
-nharvest <- length(thinning_regimes)
-combined_names <-  apply(expand.grid(ifn_plots$Codi, substr(names(thinning_regimes),10,14)), 1, paste, collapse="_")
-
-combined_densities = rep(stands_densities, nharvest)
-combined_latitude = rep(stands_latitude,nharvest)
-combined_harvest = rep(thinning_regimes, nplots)
 
 # Insert xml into SORTIE parameter files ----------------------------------
 
-narrative <- mapply(list, 
-                    densities = combined_densities,
-                    latitudes = combined_latitude,
-                    names = combined_names,
-                    harvest = combined_harvest,
+nharvest <- length(thinning_regimes)
+
+narrative_PIPR <- mapply(list, 
+                    densities = rep(PIPR_densities, nharvest),
+                    latitudes = rep(PIPR_lat, nharvest),
+                    names = apply(expand.grid(PIPR_names,substr(names(thinning_regimes),10,14)),
+                                  1, paste, collapse="_"),
+                    harvest = rep(thinning_regimes, length(PIPR_names)),
                     SIMPLIFY = FALSE)
 
-names(narrative) <- combined_names
+narrative_PIPA <- mapply(list, 
+                         densities = rep(PIPA_densities, nharvest),
+                         latitudes = rep(PIPA_lat, nharvest),
+                         names = apply(expand.grid(PIPA_names,substr(names(thinning_regimes),10,14)),
+                                       1, paste, collapse="_"),
+                         harvest = rep(thinning_regimes, length(PIPA_names)),
+                         SIMPLIFY = FALSE)
 
+narrative_PIHA <- mapply(list, 
+                         densities = rep(PIHA_densities, nharvest),
+                         latitudes = rep(PIHA_lat, nharvest),
+                         names = apply(expand.grid(PIHA_names,substr(names(thinning_regimes),10,14)),
+                                       1, paste, collapse="_"),
+                         harvest = rep(thinning_regimes, length(PIHA_names)),
+                         SIMPLIFY = FALSE)
 
+narrative_PINI <- mapply(list, 
+                         densities = rep(PINI_densities, nharvest),
+                         latitudes = rep(PINI_lat, nharvest),
+                         names = apply(expand.grid(PINI_names,substr(names(thinning_regimes),10,14)),
+                                       1, paste, collapse="_"),
+                         harvest = rep(thinning_regimes, length(PINI_names)),
+                         SIMPLIFY = FALSE)
 
-parse_xml <- function (narrative, climate_name) {
+narrative_PISY <- mapply(list, 
+                         densities = rep(PISY_densities, nharvest),
+                         latitudes = rep(PISY_lat, nharvest),
+                         names = apply(expand.grid(PISY_names,substr(names(thinning_regimes),10,14)),
+                                       1, paste, collapse="_"),
+                         harvest = rep(thinning_regimes, length(PISY_names)),
+                         SIMPLIFY = FALSE)
+
+narrative_PIUN <- mapply(list, 
+                         densities = rep(PIUN_densities, nharvest),
+                         latitudes = rep(PIUN_lat, nharvest),
+                         names = apply(expand.grid(PIUN_names,substr(names(thinning_regimes),10,14)),
+                                       1, paste, collapse="_"),
+                         harvest = rep(thinning_regimes, length(PIUN_names)),
+                         SIMPLIFY = FALSE)
   
+
+parse_xml <- function (narrative, climate) {
+  ### DEFINIR LOS NOMBRES EN BASE A NOMBRE DE OBJETO!
+  
+  climate_name <- deparse(substitute(climate))
+  narrative_name <- deparse(susbtitute(narrative))
   densities <- narrative$densities
-  plot_ID <- paste0(narrative$names,"_", climate_name)
-  latitude <- narrative$latitudes
-  thinning <- narrative$harvest
+  plot_ID <- paste0(names,"_",
+                    climate_name,
+                   "_",
+                   narrative_name)
+  latitude <- narrative$latitude
+  harvest <- narrative$harvest
 
-  
-  y <- read_xml("./data/SORTIE_piloto.xml")
+y <- read_xml("./data/SORTIE_piloto.xml")
   
   
   ## Name a series of nodes that we want to substitute
@@ -318,7 +430,7 @@ parse_xml <- function (narrative, climate_name) {
   #sortie_planting <- xml_children(y)[[16]]
   
   ## Climate Importer
-  sortie_climate <-xml_children(y)[[6]]
+   sortie_climate <-xml_children(y)[[6]]
   
   ## Output
   sortie_output <- xml_children(y)[[17]]
@@ -342,14 +454,14 @@ parse_xml <- function (narrative, climate_name) {
     xml_text(sortie_short_output_name) <- paste0("D:\\Activity\\Thinning_CC\\Thinning_Cat\\data\\SORTIE_Outputs\\THINNING_",
                                                  plot_ID)
     y
-}
 
+}
 
 
 # Generate the xml files --------------------------------------------------
 
 ## Climate CCLM_85
- xml_files <- pmap(list(narrative, "CCLM_85"), parse_xml)
+ xml_files <- pmap(list(narrative_PIPR, CCLM_8.5), parse_xml)
 
   map(seq_along(xml_files), function(i){
     write_xml(xml_files[[i]],
