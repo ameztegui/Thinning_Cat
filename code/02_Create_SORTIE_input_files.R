@@ -348,7 +348,8 @@ nharvest <- length(thinning_regimes)
 narrative_PIPR <- mapply(list, 
                     densities = rep(PIPR_densities, nharvest),
                     latitudes = rep(PIPR_lat, nharvest),
-                    names = apply(expand.grid(PIPR_names,substr(names(thinning_regimes),10,14)),
+                    names = apply(expand.grid(PIPR_names,substr(names(thinning_regimes),10,14),
+                                              "PIPR"),
                                   1, paste, collapse="_"),
                     harvest = rep(thinning_regimes, length(PIPR_names)),
                     climate = rep (PIPR_CCLM_8.5, nharvest),
@@ -358,7 +359,8 @@ names(narrative_PIPR) <- map(narrative_PIPR, "names")
 narrative_PIPA <- mapply(list, 
                          densities = rep(PIPA_densities, nharvest),
                          latitudes = rep(PIPA_lat, nharvest),
-                         names = apply(expand.grid(PIPA_names,substr(names(thinning_regimes),10,14)),
+                         names = apply(expand.grid(PIPA_names,substr(names(thinning_regimes),10,14),
+                                                   "PIPA"),
                                        1, paste, collapse="_"),
                          harvest = rep(thinning_regimes, length(PIPA_names)),
                          climate = rep (PIPA_CCLM_8.5, nharvest),
@@ -368,7 +370,8 @@ names(narrative_PIPA) <- map(narrative_PIPA, "names")
 narrative_PIHA <- mapply(list, 
                          densities = rep(PIHA_densities, nharvest),
                          latitudes = rep(PIHA_lat, nharvest),
-                         names = apply(expand.grid(PIHA_names,substr(names(thinning_regimes),10,14)),
+                         names = apply(expand.grid(PIHA_names,substr(names(thinning_regimes),10,14),
+                                                   "PIHA"),
                                        1, paste, collapse="_"),
                          harvest = rep(thinning_regimes, length(PIHA_names)),
                          climate = rep (PIHA_CCLM_8.5, nharvest),
@@ -378,7 +381,8 @@ names(narrative_PIHA) <- map(narrative_PIHA, "names")
 narrative_PINI <- mapply(list, 
                          densities = rep(PINI_densities, nharvest),
                          latitudes = rep(PINI_lat, nharvest),
-                         names = apply(expand.grid(PINI_names,substr(names(thinning_regimes),10,14)),
+                         names = apply(expand.grid(PINI_names,substr(names(thinning_regimes),10,14),
+                                                   "PINI"),
                                        1, paste, collapse="_"),
                          harvest = rep(thinning_regimes, length(PINI_names)),
                          climate = rep (PINI_CCLM_8.5, nharvest),
@@ -388,7 +392,8 @@ names(narrative_PINI) <- map(narrative_PINI, "names")
 narrative_PISY <- mapply(list, 
                          densities = rep(PISY_densities, nharvest),
                          latitudes = rep(PISY_lat, nharvest),
-                         names = apply(expand.grid(PISY_names,substr(names(thinning_regimes),10,14)),
+                         names = apply(expand.grid(PISY_names,substr(names(thinning_regimes),10,14),
+                                                   "PISY"),
                                        1, paste, collapse="_"),
                          harvest = rep(thinning_regimes, length(PISY_names)),
                          climate = rep (PISY_CCLM_8.5, nharvest),
@@ -398,7 +403,8 @@ names(narrative_PISY) <- map(narrative_PISY, "names")
 narrative_PIUN <- mapply(list, 
                          densities = rep(PIUN_densities, nharvest),
                          latitudes = rep(PIUN_lat, nharvest),
-                         names = apply(expand.grid(PIUN_names,substr(names(thinning_regimes),10,14)),
+                         names = apply(expand.grid(PIUN_names,substr(names(thinning_regimes),10,14),
+                                                   "PIUN"),
                                        1, paste, collapse="_"),
                          harvest = rep(thinning_regimes, length(PIUN_names)),
                          climate = rep (PIUN_CCLM_8.5, nharvest),
@@ -472,9 +478,45 @@ y <- read_xml("./data/SORTIE_piloto.xml")
 
 # Generate the xml files --------------------------------------------------
 
-## Climate CCLM_85
- xml_files <- pmap(list(narrative_PIPR,"PIPR",  "CCLM_8.5"), parse_xml)
-  map(seq_along(xml_files), function(i){
-    write_xml(xml_files[[i]],
-              file=paste0("D:/Activity/Thinning_CC/Thinning_Cat/data/SORTIE_Inputs/", names(xml_files)[[i]],"_CCLM_85.xml")) })
+## PIPR
+ PIPR_xml_files <- pmap(list(narrative_PIPR,"PIPR",  "CCLM_8.5"), parse_xml)
+  map(seq_along(PIPR_xml_files), function(i){
+    write_xml(PIPR_xml_files[[i]],
+              file=paste0("D:/Activity/Thinning_CC/Thinning_Cat/data/SORTIE_Inputs/", 
+                          names(PIPR_xml_files)[[i]],"_CCLM_85.xml")) })
+
+## PIPA
+PIPA_xml_files <- pmap(list(narrative_PIPA,"PIPA",  "CCLM_8.5"), parse_xml)
+map(seq_along(PIPA_xml_files), function(i){
+  write_xml(PIPA_xml_files[[i]],
+            file=paste0("D:/Activity/Thinning_CC/Thinning_Cat/data/SORTIE_Inputs/", 
+                        names(PIPA_xml_files)[[i]],"_CCLM_85.xml")) })
+
+## PIHA
+PIHA_xml_files <- pmap(list(narrative_PIHA,"PIHA",  "CCLM_8.5"), parse_xml)
+map(seq_along(PIHA_xml_files), function(i){
+  write_xml(PIHA_xml_files[[i]],
+            file=paste0("D:/Activity/Thinning_CC/Thinning_Cat/data/SORTIE_Inputs/", 
+                        names(PIHA_xml_files)[[i]],"_CCLM_85.xml")) })
+
+## PINI
+PINI_xml_files <- pmap(list(narrative_PINI,"PINI",  "CCLM_8.5"), parse_xml)
+map(seq_along(PINI_xml_files), function(i){
+  write_xml(PINI_xml_files[[i]],
+            file=paste0("D:/Activity/Thinning_CC/Thinning_Cat/data/SORTIE_Inputs/", 
+                        names(PINI_xml_files)[[i]],"_CCLM_85.xml")) })
+
+## PISY
+PISY_xml_files <- pmap(list(narrative_PISY,"PISY",  "CCLM_8.5"), parse_xml)
+map(seq_along(PISY_xml_files), function(i){
+  write_xml(PISY_xml_files[[i]],
+            file=paste0("D:/Activity/Thinning_CC/Thinning_Cat/data/SORTIE_Inputs/", 
+                        names(PISY_xml_files)[[i]],"_CCLM_85.xml")) })
+
+## PIUN
+PIUN_xml_files <- pmap(list(narrative_PIUN,"PIUN",  "CCLM_8.5"), parse_xml)
+map(seq_along(PIUN_xml_files), function(i){
+  write_xml(PIUN_xml_files[[i]],
+            file=paste0("D:/Activity/Thinning_CC/Thinning_Cat/data/SORTIE_Inputs/", 
+                        names(PIUN_xml_files)[[i]],"_CCLM_85.xml")) })
 
